@@ -3,23 +3,25 @@ package com.guarana.test.anant.redditclient.networking
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import com.guarana.test.anant.redditclient.persistance.storeEmpty
+import com.guarana.test.anant.redditclient.persistance.storeRedditChildren
+import com.guarana.test.anant.redditclient.persistance.storeRedditPostItemDetail
 import com.guarana.test.anant.redditclient.response.*
 import com.guarana.test.anant.redditclient.response.Route
+import kotlinx.coroutines.experimental.CompletableDeferred
 import kotlinx.coroutines.experimental.android.HandlerContext
+import kotlinx.coroutines.experimental.run
 import okhttp3.*
 import java.io.IOException
 import java.net.URI
-import kotlinx.coroutines.experimental.run
-import kotlinx.coroutines.experimental.CompletableDeferred
 
 /**
  * Created by anant on 2018-11-08.
  */
 
 class API private constructor(var baseURL: URI) {
-    var api: API = API.baseRoute
     companion object {
-        val baseRoute: API = API(URI.create("https://www.reddit.com/"))
+        val baseRoute: API = API(URI.create("https://www.reddit.com"))
     }
 }
 
@@ -55,9 +57,11 @@ object NetworkManager {
 
             result = parsedResponse
         } catch (e: Exception) {
+            Log.d("failure:", route.path)
             Log.d(TAG, e.localizedMessage)
             throw e
         } catch (e: Exception) {
+            Log.d("failure:", route.path)
             Log.e(TAG, e.localizedMessage)
             throw e
         }
@@ -104,9 +108,14 @@ object NetworkManager {
         return deferred.await()
     }
 
-
     suspend fun suspendRequestRedditItems() {
-       // suspendRequest(GetAllRedditItems(), null, ::parseRedditItems, ::storeRedditChildrenItemData)
+        suspendRequest(GetAllRedditItems(), null, ::parseRedditItems, ::storeRedditChildren)
+    }
+
+    suspend fun suspendRequestRedditPostItemDetail(permalink: String){
+
+        suspendRequest(GetRedditPostItemDetail(permalink), null, ::parseRedditPostItemDetail, ::storeRedditPostItemDetail)
+
     }
 }
 

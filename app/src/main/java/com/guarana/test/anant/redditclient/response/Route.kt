@@ -30,10 +30,20 @@ sealed class Route(val path: String) {
     }
 }
 
-class GetAllRedditItems : Route("r/all.json") {
+class GetAllRedditItems : Route("/r/all.json") {
     override fun getUrl(): HttpUrl {
         var allRedditItemsUrl = "${NetworkManager.api.baseURL}" +
-                "r/all.json"
+                "/r/all.json"
         return HttpUrl.parse(allRedditItemsUrl)!!
+    }
+}
+
+class GetRedditPostItemDetail(var permalink: String) : Route("") {
+
+    override fun getUrl(): HttpUrl {
+
+        val redditPostItemUrl = "${NetworkManager.api.baseURL}"+ "$permalink.json"
+        return HttpUrl.parse(redditPostItemUrl)!!
+
     }
 }

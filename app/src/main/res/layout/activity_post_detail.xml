@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.guarana.test.anant.redditclient.ui.RedditClientItemsActivity">
+    tools:context="com.guarana.test.anant.redditclient.ui.PostDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_reddit_client_item" />
+    <include layout="@layout/content_post_detail" />
 
 </android.support.design.widget.CoordinatorLayout>

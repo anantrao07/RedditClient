@@ -19,4 +19,6 @@
     <string name="title_activity_reddit_client_item">Reddit Client</string>
     <string name="author_default_text">Author</string>
     <string name="post_default_text">Title</string>
+    <string name="title_activity_post_detail">Post Details</string>
+    <string name="post_body_text">About Post</string>
 </resources>

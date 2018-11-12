@@ -9,6 +9,7 @@
     tools:showIn="@layout/activity_reddit_client_item">
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/redditItemsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
