@@ -35,7 +35,7 @@ class RedditClientItemsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_reddit_client_item)
         setSupportActionBar(toolbar)
 
-        redditItemsResults = fetchRedditItems(realmInstance)
+
         launch {
             async(UI) {
                 try {
@@ -47,7 +47,7 @@ class RedditClientItemsActivity : AppCompatActivity() {
             }.await()
         }
 
-
+        redditItemsResults = fetchRedditItems(realmInstance)
         if (redditItemsResults?.isNotEmpty() == true) {
            setUpRecyclerView(redditItemsResults!!)
         }
@@ -66,8 +66,6 @@ class RedditClientItemsActivity : AppCompatActivity() {
         redditItemsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         redditItemsRecyclerView.adapter = RedditItemsAdapter(redditItems)
     }
-
-
 
     inner class RedditItemsAdapter(private val redditItemsData: OrderedRealmCollection<RedditItemData>) : RealmRecyclerViewAdapter<RedditItemData,RedditItemsAdapter.RedditItemViewHolder>(redditItemsData, true) {
         inner class RedditItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

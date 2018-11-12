@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_post_detail.*
 import kotlinx.android.synthetic.main.content_post_detail.*
 import kotlinx.android.synthetic.main.reddit_client_list_item.*
 import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 
 class PostDetailActivity : AppCompatActivity() {
@@ -29,9 +30,11 @@ class PostDetailActivity : AppCompatActivity() {
 
 
         try {
-            launch(UI) {
+            launch {
 
-                NetworkManager.suspendRequestRedditPostItemDetail(intent.getStringExtra("permalink"))
+                async(UI) {
+                    NetworkManager.suspendRequestRedditPostItemDetail(intent.getStringExtra("permalink"))
+                }.await()
             }
         } catch (e: Exception) {
             Log.d("item detail", e.localizedMessage)
