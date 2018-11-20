@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.guarana.test.anant.redditclient.R
 import com.guarana.test.anant.redditclient.networking.NetworkManager.suspendRequestRedditItems
 import com.guarana.test.anant.redditclient.persistance.fetchRedditItems
@@ -34,27 +35,29 @@ class RedditClientItemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reddit_client_item)
         setSupportActionBar(toolbar)
-
-
-        launch {
-            async(UI) {
-                try {
-                    suspendRequestRedditItems()
-
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }.await()
-        }
-
         redditItemsResults = fetchRedditItems(realmInstance)
         if (redditItemsResults?.isNotEmpty() == true) {
            setUpRecyclerView(redditItemsResults!!)
+        }
+        else {
+            launch {
+                async(UI) {
+                    try {
+                        suspendRequestRedditItems()
+                        setUpRecyclerView(redditItemsResults!!)
+                    } catch (e: Exception) {
+                        Toast.makeText(this@RedditClientItemsActivity, getString(R.string.something_went_wrong),Toast.LENGTH_LONG).show()
+                        e.printStackTrace()
+                    }
+                }.await()
+            }
         }
     }
 
     override fun onStart() {
         super.onStart()
+
+
     }
 
     override fun onDestroy() {

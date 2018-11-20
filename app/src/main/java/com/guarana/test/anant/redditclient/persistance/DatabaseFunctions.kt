@@ -1,10 +1,7 @@
 package com.guarana.test.anant.redditclient.persistance
 
 
-import com.guarana.test.anant.redditclient.persistance.models.RedditItemData
-import com.guarana.test.anant.redditclient.persistance.models.RedditPostItemDetail
-import com.guarana.test.anant.redditclient.persistance.models.RedditPostItemDetailData
-import com.guarana.test.anant.redditclient.persistance.models.RedditResponseChildrenData
+import com.guarana.test.anant.redditclient.persistance.models.*
 import com.guarana.test.anant.redditclient.response.RedditPostItemDetailResponseData
 import io.realm.Realm
 import io.realm.RealmList
@@ -46,11 +43,8 @@ fun storeRedditChildren(redditChildren: RealmList<RedditResponseChildrenData>) {
 }
 
 fun storeRedditPostItemDetail(redditPostItemDetail: List<RedditPostItemDetailResponseData>) {
-    redditPostItemDetail.forEach {
-        it.data.children.forEach {
-            storeOrUpdate(it.data as RealmObject)
-        }
-    }
+
+    storeOrUpdate(redditPostItemDetail[0].data.children[0]?.data as RealmObject)
 }
 
 @Suppress("UNUSED_PARAMETER")

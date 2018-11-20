@@ -28,13 +28,8 @@ open class RedditPostItemDetail
         var author: String = "",
         var body: String = "",
         @SerializedName("preview")
-        var url: RedditPostItemDetailImage? = null
+        var url: RedditPostItemDetailImage? = RedditPostItemDetailImage()
 ): RealmObject()
-
-open class RedditPostItemDetailPreview
-(
-        @SerializedName("preview") var preview: RedditPostItemDetailImage? = null
-):RealmObject()
 
 open class RedditPostItemDetailImage
 (
@@ -48,5 +43,7 @@ open class RedditPostItemDetailImageSource
 
 open class RedditPostItemDetailImageUrl
 (
-        @SerializedName("url") var url: String = ""
+        @SerializedName("url") var url: String = "",
+        @PrimaryKey
+        var id: String = ""
 ): RealmObject()
